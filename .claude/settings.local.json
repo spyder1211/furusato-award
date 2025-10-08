@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer create-project:*)",
+      "Bash(shopt:*)",
+      "Bash(php artisan:*)",
+      "Bash(mysql:*)",
+      "Bash(composer require:*)",
+      "Bash(composer search:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
