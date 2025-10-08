@@ -13,8 +13,20 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        ダッシュボード
                     </x-nav-link>
+
+                    @if(Auth::user()->role === 'municipality')
+                        <x-nav-link :href="route('municipalities.index')" :active="request()->routeIs('municipalities.*')">
+                            首長マッチング
+                        </x-nav-link>
+                        <x-nav-link :href="route('municipalities.edit')" :active="request()->routeIs('municipalities.edit')">
+                            マイページ
+                        </x-nav-link>
+                        <x-nav-link :href="route('municipalities.offers.received')" :active="request()->routeIs('municipalities.offers.*')">
+                            オファー管理
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -68,8 +80,20 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                ダッシュボード
             </x-responsive-nav-link>
+
+            @if(Auth::user()->role === 'municipality')
+                <x-responsive-nav-link :href="route('municipalities.index')" :active="request()->routeIs('municipalities.*')">
+                    首長マッチング
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('municipalities.edit')" :active="request()->routeIs('municipalities.edit')">
+                    マイページ
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('municipalities.offers.received')" :active="request()->routeIs('municipalities.offers.*')">
+                    オファー管理
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
