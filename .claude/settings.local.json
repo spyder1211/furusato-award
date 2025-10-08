@@ -7,7 +7,9 @@
       "Bash(mysql:*)",
       "Bash(composer require:*)",
       "Bash(composer search:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: データベース設計とマイグレーション実装完了\n\n- Laravel 11 + Filament 3 環境構築\n- MySQL データベース設定\n- 全テーブルのマイグレーション作成・実行\n  - users拡張（role, is_approved, phone）\n  - municipality_profiles（首長プロフィール）\n  - company_profiles（企業プロフィール）\n  - company_services（企業サービス・技術事例）\n  - municipality_offers（首長→首長オファー）\n  - company_offers（自治体→企業オファー）\n- オファー重複防止のユニーク制約追加\n- プロジェクトドキュメント整備（docs/）\n- CLAUDE.md、mvp_requirements.md 更新\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
