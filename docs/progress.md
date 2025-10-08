@@ -1,6 +1,6 @@
 # ふるさとアワード マッチングプラットフォーム - 開発進捗状況
 
-**最終更新**: 2025年10月8日（Eloquentモデル作成完了）
+**最終更新**: 2025年10月8日（Filament管理画面構築完了）
 
 ## プロジェクト概要
 
@@ -129,6 +129,47 @@
   - belongsTo CompanyService (service_id)
   - belongsTo municipality (User, municipality_user_id)
 
+#### 6. Filament管理画面の構築
+すべてのFilamentリソースを作成し、管理画面機能が完成：
+
+**✅ 管理者ユーザー作成**
+- AdminUserSeeder 作成
+- Email: admin@ihearts.co.jp / Password: password
+- role: admin, is_approved: true
+
+**✅ UserResource（ユーザー管理）**
+- 日本語ラベル対応
+- role別バッジ表示（首長/企業/管理者）
+- 承認/却下アクション実装
+- フィルター機能（role、承認状態）
+- パスワード編集対応（作成時必須、編集時任意）
+
+**✅ MunicipalityOfferResource（首長マッチング管理）**
+- 送信者・受信者情報表示（名前、自治体名）
+- ステータス管理（新規/対応中/完了）
+- ステータス変更アクション実装
+- 管理者メモ機能
+- ステータスフィルター
+
+**✅ CompanyServiceResource（企業サービス管理）**
+- 企業名・カテゴリ表示
+- カテゴリ別バッジ（7カテゴリ対応）
+- 公開状態管理（下書き/公開）
+- カテゴリ・公開状態フィルター
+- 企業ユーザーのみ選択可能
+
+**✅ CompanyOfferResource（企業マッチング管理）**
+- 自治体・企業・サービス情報表示
+- ステータス管理（新規/対応中/完了）
+- ステータス変更アクション実装
+- 管理者メモ機能
+- カテゴリ・ステータスフィルター
+
+**管理画面アクセス情報:**
+- URL: http://127.0.0.1:8001/admin
+- Email: admin@ihearts.co.jp
+- Password: password
+
 ## 技術スタック
 
 ### フレームワーク・ライブラリ
@@ -165,15 +206,14 @@
 - [x] MunicipalityOffer モデル作成
 - [x] CompanyOffer モデル作成
 
-#### 2. Filament管理画面の構築
-- [ ] 管理者ユーザーの作成
-- [ ] UserResource 作成（ユーザー管理CRUD）
-- [ ] MunicipalityProfileResource 作成
-- [ ] CompanyProfileResource 作成
-- [ ] CompanyServiceResource 作成
-- [ ] MunicipalityOfferResource 作成（オファー管理）
-- [ ] CompanyOfferResource 作成（オファー管理）
-- [ ] ダッシュボードウィジェット作成（統計表示）
+#### 2. Filament管理画面の構築 ✅ **完了**
+- [x] 管理者ユーザーの作成
+- [x] UserResource 作成（ユーザー管理CRUD）
+- [x] MunicipalityOfferResource 作成（オファー管理）
+- [x] CompanyServiceResource 作成
+- [x] CompanyOfferResource 作成（オファー管理）
+
+**注:** プロフィールリソースとダッシュボードウィジェットは次フェーズで実装
 
 #### 3. 一般ユーザー向け認証機能
 - [ ] Laravel Breeze インストール（または手動実装）
@@ -312,23 +352,42 @@ php artisan view:clear
 
 1. ✅ Eloquentモデルを一括作成 - **完了**
 2. ✅ 各モデルにリレーション・キャスト・Fillable定義を追加 - **完了**
-3. Filament管理者ユーザーを作成
-4. UserResourceから順にFilamentリソースを作成
-5. 管理画面でユーザー承認機能を実装
+3. ✅ Filament管理者ユーザーを作成 - **完了**
+4. ✅ UserResourceから順にFilamentリソースを作成 - **完了**
+5. ✅ 管理画面でユーザー承認機能を実装 - **完了**
+6. 一般ユーザー向け認証機能を実装（Laravel Breeze）
+7. 首長プロフィール一覧・詳細ページを作成
+8. 首長マッチングのオファー機能を実装
 
-## 作成済みモデルファイル一覧
+## 作成済みファイル一覧
 
+### Eloquentモデル
 ```
 app/Models/
 ├── User.php (拡張済み)
-├── MunicipalityProfile.php ✅ 新規作成
-├── CompanyProfile.php ✅ 新規作成
-├── CompanyService.php ✅ 新規作成
-├── MunicipalityOffer.php ✅ 新規作成
-└── CompanyOffer.php ✅ 新規作成
+├── MunicipalityProfile.php ✅
+├── CompanyProfile.php ✅
+├── CompanyService.php ✅
+├── MunicipalityOffer.php ✅
+└── CompanyOffer.php ✅
+```
+
+### Filamentリソース
+```
+app/Filament/Resources/
+├── UserResource.php ✅
+├── MunicipalityOfferResource.php ✅
+├── CompanyServiceResource.php ✅
+└── CompanyOfferResource.php ✅
+```
+
+### Seeder
+```
+database/seeders/
+└── AdminUserSeeder.php ✅
 ```
 
 ---
 
-**プロジェクト進捗**: Eloquentモデル作成完了（約30%）
-**次のマイルストーン**: Filament管理画面構築（目標: Week 2完了）
+**プロジェクト進捗**: Filament管理画面構築完了（約50%）
+**次のマイルストーン**: 一般ユーザー向け認証と首長マッチング機能（目標: Week 2-3完了）
