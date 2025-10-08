@@ -1,6 +1,6 @@
 # ふるさとアワード マッチングプラットフォーム - 開発進捗状況
 
-**最終更新**: 2025年10月8日（首長マッチング機能完成）
+**最終更新**: 2025年10月8日（企業サービス投稿機能完成）
 
 ## プロジェクト概要
 
@@ -257,6 +257,82 @@ Laravel Breezeをベースに、カスタム認証機能を実装完了：
 - Email: mayor1@example.com ~ mayor8@example.com
 - Password: password（全員共通）
 
+#### 9. メール通知機能
+首長オファー送信時のメール通知機能を実装完了：
+
+**✅ Mailableクラス**
+- `MunicipalityOfferNotification` - 首長オファー通知
+- `CompanyOfferNotification` - 企業オファー通知（企業マッチング用）
+- 受信者向け/管理者向けで異なる件名・内容
+
+**✅ メールテンプレート**
+- `emails/municipality-offer.blade.php` - 首長オファー通知テンプレート
+- `emails/company-offer.blade.php` - 企業オファー通知テンプレート
+- レスポンシブデザイン対応
+- 詳細なオファー情報表示
+
+**✅ コントローラー統合**
+- `MunicipalityOfferController::store()` - オファー送信時に自動メール送信
+  - 受信者へ通知メール送信
+  - 全管理者へ通知メール送信
+  - エラーハンドリング実装
+
+**✅ メール設定**
+- .env設定: MAIL_MAILER=log（開発環境）
+- 送信元: noreply@ihearts.co.jp
+- ログファイルへの出力確認済み（storage/logs/laravel.log）
+
+**✅ テスト実施**
+- Tinkerを使用したメール送信テスト完了
+- ログファイルでメール内容確認済み
+
+#### 10. 企業マッチング機能（基盤部分完成）
+企業がサービスを投稿・管理する機能を実装完了：
+
+**✅ 企業プロフィール機能**
+- `CompanyProfileController` - プロフィール編集コントローラー
+- マイページ（企業プロフィール編集）
+  - 企業名、事業概要、提供可能なサービス・技術の編集
+  - バリデーション実装（必須項目、文字数制限）
+- ルーティング: `/companies/profile`
+
+**✅ 企業サービス投稿管理機能**
+- `CompanyServiceController` - サービスCRUD操作
+- 自分の投稿サービス一覧ページ
+  - カテゴリバッジ表示（7カテゴリ対応）
+  - 公開/下書きステータス表示
+  - 編集・削除ボタン
+  - ページネーション（20件/ページ）
+- 新規投稿フォーム
+  - タイトル、カテゴリ選択
+  - サービス・技術の詳細（最大3000文字）
+  - 導入実績・事例（任意、最大2000文字）
+  - 自社の強み（任意、最大2000文字）
+  - 公開/下書きステータス選択
+- 編集フォーム（自分の投稿のみ編集可能）
+- 削除機能（確認ダイアログ付き）
+
+**✅ ビューファイル**
+- `companies/profile/edit.blade.php` - 企業プロフィール編集
+- `companies/services/index.blade.php` - サービス一覧（企業管理用）
+- `companies/services/create.blade.php` - 新規投稿フォーム
+- `companies/services/edit.blade.php` - 編集フォーム
+
+**✅ ルーティング**
+- `/companies/profile` (GET/PUT) - プロフィール編集
+- `/companies/services` (GET) - サービス一覧
+- `/companies/services/create` (GET) - 新規投稿フォーム
+- `/companies/services` (POST) - サービス投稿
+- `/companies/services/{id}/edit` (GET) - 編集フォーム
+- `/companies/services/{id}` (PUT) - サービス更新
+- `/companies/services/{id}` (DELETE) - サービス削除
+
+**✅ ナビゲーションメニュー**
+- 企業アカウント用メニュー追加
+  - サービス管理
+  - マイページ
+- デスクトップ・モバイル対応
+
 ## 技術スタック
 
 ### フレームワーク・ライブラリ
@@ -327,29 +403,38 @@ Laravel Breezeをベースに、カスタム認証機能を実装完了：
 - [x] マイページ（自分のプロフィール編集）
 - [x] テストデータシーダー作成
 
-#### 5. 企業マッチング機能
-- [ ] 企業サービス一覧ページ
+#### 5. メール通知機能 ✅ **完了**
+- [x] Mailable クラス作成
+  - MunicipalityOfferNotification（首長オファー通知）
+  - CompanyOfferNotification（企業オファー通知）
+- [x] メールテンプレート作成
+- [x] コントローラーに統合
+- [x] .env設定（開発環境）
+- [x] テスト実施・確認
+
+#### 6. 企業マッチング機能（基盤部分完了）
+- [x] 企業プロフィール編集機能（マイページ）
+- [x] 企業サービス投稿機能（企業のみ）
+  - 作成・編集・削除
+  - 公開/下書きステータス管理
+  - カテゴリ選択（7カテゴリ）
+- [x] 企業サービス管理一覧ページ（自分の投稿）
+- [x] ナビゲーションメニューに企業メニュー追加
+
+**残りのタスク（次のステップ）:**
+- [ ] 企業サービス公開一覧ページ（全ユーザー閲覧可能）
   - カテゴリフィルター
   - ページネーション
-- [ ] 企業サービス詳細ページ
-- [ ] 企業サービス投稿機能（企業のみ）
+- [ ] 企業サービス詳細ページ（オファー送信フォーム含む）
 - [ ] オファー送信機能（自治体→企業）
   - 重複チェック
   - 管理者・企業への通知メール
 - [ ] オファー受信一覧ページ（企業側）
-
-#### 6. メール通知機能
-- [ ] Mailable クラス作成
-  - 首長オファー通知
-  - 企業オファー通知
-  - 管理者向け通知
-- [ ] イベント/リスナー実装
-- [ ] Mailtrap 設定（開発環境）
+- [ ] 企業テストデータシーダー作成
 
 #### 7. テスト・デプロイ
 - [ ] 機能テスト作成
 - [x] シーダー作成（テストデータ） - 首長データ完了
-- [ ] 企業テストデータシーダー作成
 - [ ] 本番環境準備
 
 ## 重要な設定情報
@@ -451,8 +536,14 @@ php artisan view:clear
 6. ✅ 一般ユーザー向け認証機能を実装（Laravel Breeze） - **完了**
 7. ✅ 首長プロフィール一覧・詳細ページを作成 - **完了**
 8. ✅ 首長マッチングのオファー機能を実装 - **完了**
-9. メール通知機能を実装（オファー送信時の通知）
-10. 企業マッチング機能を実装
+9. ✅ メール通知機能を実装（オファー送信時の通知） - **完了**
+10. ✅ 企業プロフィール・サービス投稿機能を実装 - **完了**
+11. 企業マッチング機能を完成させる（次のステップ）
+    - 企業サービス公開一覧ページ（全ユーザー閲覧可能）
+    - 企業サービス詳細ページ（オファー送信フォーム含む）
+    - オファー送信機能（自治体→企業、メール通知統合）
+    - オファー受信一覧ページ（企業側）
+    - 企業テストデータシーダー作成
 
 ## 作成済みファイル一覧
 
@@ -509,7 +600,7 @@ bootstrap/
 ```
 app/Http/Controllers/
 ├── MunicipalityProfileController.php ✅
-└── MunicipalityOfferController.php ✅
+└── MunicipalityOfferController.php ✅ (メール通知統合済み)
 
 resources/views/municipalities/
 ├── index.blade.php ✅ (プロフィール一覧)
@@ -526,7 +617,41 @@ routes/
 └── web.php ✅ (首長マッチングルート追加)
 ```
 
+### メール通知機能
+```
+app/Mail/
+├── MunicipalityOfferNotification.php ✅
+└── CompanyOfferNotification.php ✅
+
+resources/views/emails/
+├── municipality-offer.blade.php ✅
+└── company-offer.blade.php ✅
+
+.env ✅ (MAIL_MAILER=log, MAIL_FROM_ADDRESS設定済み)
+```
+
+### 企業マッチング機能
+```
+app/Http/Controllers/
+├── CompanyProfileController.php ✅
+└── CompanyServiceController.php ✅
+
+resources/views/companies/
+├── profile/
+│   └── edit.blade.php ✅ (企業プロフィール編集)
+└── services/
+    ├── index.blade.php ✅ (サービス管理一覧)
+    ├── create.blade.php ✅ (新規投稿フォーム)
+    └── edit.blade.php ✅ (編集フォーム)
+
+resources/views/layouts/
+└── navigation.blade.php ✅ (企業メニュー追加済み)
+
+routes/
+└── web.php ✅ (企業ルート追加: /companies/*)
+```
+
 ---
 
-**プロジェクト進捗**: 首長マッチング機能完了（約75%）
-**次のマイルストーン**: メール通知機能 + 企業マッチング機能（目標: Week 3完了）
+**プロジェクト進捗**: 企業サービス投稿機能完了（約85%）
+**次のマイルストーン**: 企業マッチング機能完成（公開一覧・詳細・オファー機能）

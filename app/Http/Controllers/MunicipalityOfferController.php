@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MunicipalityOfferNotification;
 use App\Models\MunicipalityOffer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class MunicipalityOfferController extends Controller
@@ -57,9 +59,20 @@ class MunicipalityOfferController extends Controller
             'status' => 'pending',
         ]);
 
-        // TODO: メール通知（次のステップで実装）
-        // - 受信者への通知
-        // - 管理者への通知
+        // メール通知
+        try {
+            // 受信者への通知
+            Mail::to($receiver->email)->send(new MunicipalityOfferNotification($offer, false));
+
+            // 管理者への通知
+            $admins = User::where('role', 'admin')->get();
+            foreach ($admins as $admin) {
+                Mail::to($admin->email)->send(new MunicipalityOfferNotification($offer, true));
+            }
+        } catch (\Exception $e) {
+            // メール送信エラーは記録するが、オファー作成は成功として扱う
+            \Log::error('メール送信エラー: ' . $e->getMessage());
+        }
 
         return redirect()->route('municipalities.show', $validated['receiver_id'])
             ->with('success', 'オファーを送信しました');

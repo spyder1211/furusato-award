@@ -27,6 +27,15 @@
                             オファー管理
                         </x-nav-link>
                     @endif
+
+                    @if(Auth::user()->role === 'company')
+                        <x-nav-link :href="route('companies.services.index')" :active="request()->routeIs('companies.services.*')">
+                            サービス管理
+                        </x-nav-link>
+                        <x-nav-link :href="route('companies.profile.edit')" :active="request()->routeIs('companies.profile.edit')">
+                            マイページ
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -92,6 +101,15 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('municipalities.offers.received')" :active="request()->routeIs('municipalities.offers.*')">
                     オファー管理
+                </x-responsive-nav-link>
+            @endif
+
+            @if(Auth::user()->role === 'company')
+                <x-responsive-nav-link :href="route('companies.services.index')" :active="request()->routeIs('companies.services.*')">
+                    サービス管理
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('companies.profile.edit')" :active="request()->routeIs('companies.profile.edit')">
+                    マイページ
                 </x-responsive-nav-link>
             @endif
         </div>

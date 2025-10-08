@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MunicipalityProfileController;
 use App\Http\Controllers\MunicipalityOfferController;
+use App\Http\Controllers\CompanyProfileController;
+use App\Http\Controllers\CompanyServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,6 +39,21 @@ Route::middleware(['auth', 'approved'])->group(function () {
         Route::post('/offers', [MunicipalityOfferController::class, 'store'])->name('offers.store');
         Route::get('/offers/sent', [MunicipalityOfferController::class, 'sent'])->name('offers.sent');
         Route::get('/offers/received', [MunicipalityOfferController::class, 'received'])->name('offers.received');
+    });
+
+    // 企業プロフィール・サービス機能
+    Route::prefix('companies')->name('companies.')->group(function () {
+        // マイページ（プロフィール編集）
+        Route::get('/profile', [CompanyProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [CompanyProfileController::class, 'update'])->name('profile.update');
+
+        // サービス投稿管理
+        Route::get('/services', [CompanyServiceController::class, 'index'])->name('services.index');
+        Route::get('/services/create', [CompanyServiceController::class, 'create'])->name('services.create');
+        Route::post('/services', [CompanyServiceController::class, 'store'])->name('services.store');
+        Route::get('/services/{id}/edit', [CompanyServiceController::class, 'edit'])->name('services.edit');
+        Route::put('/services/{id}', [CompanyServiceController::class, 'update'])->name('services.update');
+        Route::delete('/services/{id}', [CompanyServiceController::class, 'destroy'])->name('services.destroy');
     });
 });
 
