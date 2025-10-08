@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class CompanyService extends Model
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user_id',
+        'title',
+        'category',
+        'description',
+        'case_studies',
+        'strengths',
+        'status',
+    ];
+
+    /**
+     * Get the user that owns the company service.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the company offers for this service.
+     */
+    public function companyOffers()
+    {
+        return $this->hasMany(CompanyOffer::class, 'service_id');
+    }
+}

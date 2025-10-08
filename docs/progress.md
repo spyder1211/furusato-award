@@ -1,6 +1,6 @@
 # ふるさとアワード マッチングプラットフォーム - 開発進捗状況
 
-**最終更新**: 2025年10月8日
+**最終更新**: 2025年10月8日（Eloquentモデル作成完了）
 
 ## プロジェクト概要
 
@@ -88,6 +88,47 @@
   - 詳細な機能仕様
   - 技術スタック更新（Laravel + Filament）
 
+#### 5. Eloquentモデルの作成
+すべてのモデルを作成し、リレーション・キャスト・Fillable定義を完了：
+
+**✅ User モデル拡張**
+- $fillable に role, phone, is_approved 追加
+- $casts に is_approved => 'boolean' 追加
+- リレーション定義完了:
+  - hasOne MunicipalityProfile
+  - hasOne CompanyProfile
+  - hasMany CompanyServices
+  - hasMany sentMunicipalityOffers (sender_id)
+  - hasMany receivedMunicipalityOffers (receiver_id)
+  - hasMany CompanyOffers (municipality_user_id)
+
+**✅ MunicipalityProfile モデル**
+- $fillable 定義完了（全カラム）
+- $casts 定義: population (decimal:2), election_count (integer), furusato_tax_amount (integer)
+- リレーション: belongsTo User
+
+**✅ CompanyProfile モデル**
+- $fillable 定義完了（全カラム）
+- リレーション: belongsTo User
+
+**✅ CompanyService モデル**
+- $fillable 定義完了（全カラム）
+- リレーション定義:
+  - belongsTo User
+  - hasMany CompanyOffers (service_id)
+
+**✅ MunicipalityOffer モデル**
+- $fillable 定義完了（全カラム）
+- リレーション定義:
+  - belongsTo sender (User, sender_id)
+  - belongsTo receiver (User, receiver_id)
+
+**✅ CompanyOffer モデル**
+- $fillable 定義完了（全カラム）
+- リレーション定義:
+  - belongsTo CompanyService (service_id)
+  - belongsTo municipality (User, municipality_user_id)
+
 ## 技術スタック
 
 ### フレームワーク・ライブラリ
@@ -114,15 +155,15 @@
 
 ### 次のステップ（優先順位順）
 
-#### 1. Eloquentモデルの作成
-- [ ] User モデルの拡張
+#### 1. Eloquentモデルの作成 ✅ **完了**
+- [x] User モデルの拡張
   - role、is_approved のキャスト設定
   - リレーション定義
-- [ ] MunicipalityProfile モデル作成
-- [ ] CompanyProfile モデル作成
-- [ ] CompanyService モデル作成
-- [ ] MunicipalityOffer モデル作成
-- [ ] CompanyOffer モデル作成
+- [x] MunicipalityProfile モデル作成
+- [x] CompanyProfile モデル作成
+- [x] CompanyService モデル作成
+- [x] MunicipalityOffer モデル作成
+- [x] CompanyOffer モデル作成
 
 #### 2. Filament管理画面の構築
 - [ ] 管理者ユーザーの作成
@@ -269,12 +310,25 @@ php artisan view:clear
 
 ## 次回セッション開始時のアクションプラン
 
-1. Eloquentモデルを一括作成
-2. 各モデルにリレーション・キャスト・Fillable定義を追加
+1. ✅ Eloquentモデルを一括作成 - **完了**
+2. ✅ 各モデルにリレーション・キャスト・Fillable定義を追加 - **完了**
 3. Filament管理者ユーザーを作成
 4. UserResourceから順にFilamentリソースを作成
+5. 管理画面でユーザー承認機能を実装
+
+## 作成済みモデルファイル一覧
+
+```
+app/Models/
+├── User.php (拡張済み)
+├── MunicipalityProfile.php ✅ 新規作成
+├── CompanyProfile.php ✅ 新規作成
+├── CompanyService.php ✅ 新規作成
+├── MunicipalityOffer.php ✅ 新規作成
+└── CompanyOffer.php ✅ 新規作成
+```
 
 ---
 
-**プロジェクト進捗**: データベース設計完了（約20%）
-**次のマイルストーン**: モデル作成とFilament管理画面構築（目標: Week 2完了）
+**プロジェクト進捗**: Eloquentモデル作成完了（約30%）
+**次のマイルストーン**: Filament管理画面構築（目標: Week 2完了）
