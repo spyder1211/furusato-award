@@ -1,34 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>利用規約 | ふるさとアワード</title>
-    <meta name="description" content="ふるさとアワードの利用規約。サービス利用に関する条件、禁止事項、免責事項等を記載しています。">
-    <meta name="robots" content="index, follow">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
-</head>
-<body class="bg-gray-50">
-    <!-- ヘッダー -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <a href="/" class="text-xl font-bold text-blue-600">ふるさとアワード</a>
-                </div>
-                <nav class="flex space-x-4">
-                    <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">トップ</a>
-                    <a href="/login" class="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">ログイン</a>
-                    <a href="/register" class="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium">新規登録</a>
-                </nav>
-            </div>
-        </div>
-    </header>
+<x-layouts.landing
+    title="利用規約 | ふるさとアワード"
+    description="ふるさとアワードの利用規約。サービス利用に関する条件、禁止事項、免責事項等を記載しています。"
+>
+    <x-header />
 
     <!-- メインコンテンツ -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -199,7 +173,7 @@
                             <h2 class="text-2xl font-bold text-gray-900 mb-4">第8条（個人情報の取り扱い）</h2>
                             <div class="pl-4 border-l-4 border-blue-600 bg-gray-50 p-4 rounded">
                                 <p class="text-gray-700 leading-relaxed">
-                                    当社は、利用者の個人情報を、別途定める「<a href="/privacy" class="text-blue-600 hover:underline">プライバシーポリシー</a>」に従い、適切に取り扱うものとします。
+                                    当社は、利用者の個人情報を、別途定める「<a href="{{ route('privacy') }}" class="text-blue-600 hover:underline">プライバシーポリシー</a>」に従い、適切に取り扱うものとします。
                                 </p>
                             </div>
                         </section>
@@ -297,43 +271,5 @@
         </div>
     </main>
 
-    <!-- フッター -->
-    <footer class="bg-gray-900 text-white mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- サービス -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">サービス</h3>
-                    <ul class="space-y-2">
-                        <li><a href="/#about" class="text-gray-400 hover:text-white">サービス概要</a></li>
-                        <li><a href="/terms" class="text-gray-400 hover:text-white">利用規約</a></li>
-                        <li><a href="/privacy" class="text-gray-400 hover:text-white">プライバシーポリシー</a></li>
-                    </ul>
-                </div>
-
-                <!-- サポート -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">サポート</h3>
-                    <ul class="space-y-2">
-                        <li><a href="mailto:info@ihearts.co.jp" class="text-gray-400 hover:text-white">お問い合わせ</a></li>
-                    </ul>
-                </div>
-
-                <!-- 運営会社 -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">運営会社</h3>
-                    <p class="text-gray-400">株式会社アイハーツ</p>
-                    <p class="text-gray-400 mt-2">
-                        お問い合わせ:<br>
-                        <a href="mailto:info@ihearts.co.jp" class="hover:text-white">info@ihearts.co.jp</a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 i-hearts, Inc. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+    <x-footer />
+</x-layouts.landing>
