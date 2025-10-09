@@ -1,12 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            送信したオファー（企業向け）
+            オファー管理
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- タブナビゲーション -->
+            <div class="mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8">
+                        <a href="{{ route('municipalities.offers.received') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                            首長から受信
+                        </a>
+                        <a href="{{ route('municipalities.offers.sent') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                            首長へ送信
+                        </a>
+                        <a href="{{ route('companies.offers.sent') }}" class="border-indigo-500 text-indigo-600 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                            企業へ送信
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
             <!-- オファー一覧 -->
             @if($offers->count() > 0)
                 <div class="space-y-4">

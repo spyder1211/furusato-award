@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            送信したオファー
+            オファー管理
         </h2>
     </x-slot>
 
@@ -12,10 +12,13 @@
                 <div class="border-b border-gray-200">
                     <nav class="-mb-px flex space-x-8">
                         <a href="{{ route('municipalities.offers.received') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
-                            受信オファー
+                            首長から受信
                         </a>
                         <a href="{{ route('municipalities.offers.sent') }}" class="border-indigo-500 text-indigo-600 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
-                            送信オファー
+                            首長へ送信
+                        </a>
+                        <a href="{{ route('companies.offers.sent') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                            企業へ送信
                         </a>
                     </nav>
                 </div>
