@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="flex-shrink-0">
                     <a href="/" class="text-2xl md:text-3xl font-bold gradient-text">
-                        ふるさとアワード
+                        ふるさとコネクト
                     </a>
                 </div>
 
@@ -72,8 +72,8 @@
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center animate-on-scroll">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                    地域課題を解決する、<br class="md:hidden">
-                    <span class="gradient-text">新しいマッチングプラットフォーム</span>
+                    地域をつなぐ、<br class="md:hidden">
+                    <span class="gradient-text">未来をつくる</span>
                 </h1>
                 <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
                     首長同士の連携、自治体と企業のマッチングを促進。<br>
@@ -110,9 +110,9 @@
     <section id="overview" class="py-20 md:py-32 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 animate-on-scroll">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">ふるさとアワードとは</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">ふるさとコネクトとは</h2>
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                    ふるさとアワードは、自治体間の連携と企業とのマッチングを促進する<br class="hidden md:block">
+                    ふるさとコネクトは、自治体間の連携と企業とのマッチングを促進する<br class="hidden md:block">
                     プラットフォームです。首長同士の交流、地域課題の解決、<br class="hidden md:block">
                     イノベーションの創出をサポートします。
                 </p>
@@ -671,7 +671,7 @@
             <h2 class="text-3xl md:text-4xl font-bold mb-6">今すぐ始めませんか?</h2>
             <p class="text-lg md:text-xl mb-10 opacity-90 leading-relaxed">
                 地域課題の解決、新しいビジネスチャンス創出に向けて、<br class="hidden md:block">
-                ふるさとアワードで第一歩を踏み出しましょう。
+                ふるさとコネクトで第一歩を踏み出しましょう。
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a href="{{ route('register') }}?role=municipality" class="w-full sm:w-auto bg-white text-primary-600 hover:bg-gray-100 px-10 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg">
@@ -690,7 +690,7 @@
             <div class="grid md:grid-cols-4 gap-8 mb-12">
                 <!-- Company Info -->
                 <div class="md:col-span-2">
-                    <h3 class="text-2xl font-bold text-white mb-4">ふるさとアワード</h3>
+                    <h3 class="text-2xl font-bold text-white mb-4">ふるさとコネクト</h3>
                     <p class="text-gray-400 mb-6 leading-relaxed">
                         自治体と企業のマッチングプラットフォーム。<br>
                         地域課題の解決をサポートします。

@@ -30,7 +30,7 @@ class MunicipalityOfferNotification extends Mailable
     {
         $subject = $this->isForAdmin
             ? '【管理者通知】新しい首長マッチングオファーが送信されました'
-            : '【ふるさとアワード】新しいマッチングオファーが届きました';
+            : '【ふるさとコネクト】新しいマッチングオファーが届きました';
 
         return new Envelope(
             subject: $subject,

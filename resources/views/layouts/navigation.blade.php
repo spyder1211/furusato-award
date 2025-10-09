@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="text-2xl md:text-3xl font-bold gradient-text">
-                        ふるさとアワード
+                        ふるさとコネクト
                     </a>
                 </div>
 

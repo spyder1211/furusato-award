@@ -6,22 +6,22 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- SEO Meta Tags -->
-    <title>{{ $title ?? 'ふるさとアワード | 自治体と企業のマッチングプラットフォーム' }}</title>
+    <title>{{ $title ?? 'ふるさとコネクト | 自治体と企業のマッチングプラットフォーム' }}</title>
     <meta name="description" content="{{ $description ?? '首長同士の連携、企業と自治体のマッチングを促進。アイハーツが仲介役として地域課題の解決をサポートします。' }}">
-    <meta name="keywords" content="ふるさとアワード,自治体,企業,マッチング,首長,地域課題,DX,観光振興,子育て支援">
+    <meta name="keywords" content="ふるさとコネクト,自治体,企業,マッチング,首長,地域課題,DX,観光振興,子育て支援">
     <meta name="author" content="株式会社アイハーツ">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="{{ $ogTitle ?? 'ふるさとアワード | 自治体と企業のマッチングプラットフォーム' }}">
+    <meta property="og:title" content="{{ $ogTitle ?? 'ふるさとコネクト | 自治体と企業のマッチングプラットフォーム' }}">
     <meta property="og:description" content="{{ $ogDescription ?? '首長同士の連携、企業と自治体のマッチングを促進。アイハーツが仲介役として地域課題の解決をサポートします。' }}">
     <meta property="og:image" content="{{ $ogImage ?? asset('images/og-image.jpg') }}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ url()->current() }}">
-    <meta property="twitter:title" content="{{ $twitterTitle ?? 'ふるさとアワード | 自治体と企業のマッチングプラットフォーム' }}">
+    <meta property="twitter:title" content="{{ $twitterTitle ?? 'ふるさとコネクト | 自治体と企業のマッチングプラットフォーム' }}">
     <meta property="twitter:description" content="{{ $twitterDescription ?? '首長同士の連携、企業と自治体のマッチングを促進。アイハーツが仲介役として地域課題の解決をサポートします。' }}">
     <meta property="twitter:image" content="{{ $twitterImage ?? asset('images/og-image.jpg') }}">
 

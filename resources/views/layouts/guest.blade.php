@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'ふるさとアワード') }}</title>
+    <title>{{ config('app.name', 'ふるさとコネクト') }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,7 +70,7 @@
         <!-- Logo -->
         <div class="mb-8">
             <a href="/" class="text-3xl md:text-4xl font-bold gradient-text">
-                ふるさとアワード
+                ふるさとコネクト
             </a>
         </div>
 

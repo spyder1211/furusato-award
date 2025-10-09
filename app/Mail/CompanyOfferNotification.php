@@ -30,7 +30,7 @@ class CompanyOfferNotification extends Mailable
     {
         $subject = $this->isForAdmin
             ? '【管理者通知】新しい企業マッチングオファーが送信されました'
-            : '【ふるさとアワード】新しい企業オファーが届きました';
+            : '【ふるさとコネクト】新しい企業オファーが届きました';
 
         return new Envelope(
             subject: $subject,

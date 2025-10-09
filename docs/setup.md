@@ -44,7 +44,7 @@ mysql -uroot -e "CREATE DATABASE IF NOT EXISTS furusato_award CHARACTER SET utf8
 `.env`ファイルを開いて、以下の設定を確認：
 
 ```env
-APP_NAME="ふるさとアワード"
+APP_NAME="ふるさとコネクト"
 APP_ENV=local
 APP_DEBUG=true
 APP_TIMEZONE=Asia/Tokyo
