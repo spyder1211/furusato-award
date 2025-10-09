@@ -74,7 +74,10 @@ class MunicipalityOfferController extends Controller
             \Log::error('メール送信エラー: ' . $e->getMessage());
         }
 
-        return redirect()->route('municipalities.show', $validated['receiver_id'])
+        // 受信者のプロフィールIDを取得してリダイレクト
+        $receiverProfileId = $receiver->municipalityProfile->id;
+
+        return redirect()->route('municipalities.show', $receiverProfileId)
             ->with('success', 'オファーを送信しました');
     }
 

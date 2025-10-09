@@ -100,7 +100,7 @@
                                     <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
                                         メッセージ（任意）
                                     </label>
-                                    <textarea name="message" id="message" rows="4" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="相談したい内容や背景を記載してください（最大1000文字）">{{ old('message') }}</textarea>
+                                    <textarea name="message" id="message" rows="4" class="w-full px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="相談したい内容や背景を記載してください（最大1000文字）">{{ old('message') }}</textarea>
                                     @error('message')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
