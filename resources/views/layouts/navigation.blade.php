@@ -16,24 +16,32 @@
                         ダッシュボード
                     </x-nav-link>
 
+                    <!-- 企業サービス一覧（全ユーザー共通） -->
+                    <x-nav-link :href="route('services.public.index')" :active="request()->routeIs('services.public.index') || request()->routeIs('services.show')">
+                        企業サービス
+                    </x-nav-link>
+
                     @if(Auth::user()->role === 'municipality')
-                        <x-nav-link :href="route('municipalities.index')" :active="request()->routeIs('municipalities.*')">
+                        <x-nav-link :href="route('municipalities.index')" :active="request()->routeIs('municipalities.index') || request()->routeIs('municipalities.show')">
                             首長マッチング
                         </x-nav-link>
                         <x-nav-link :href="route('municipalities.edit')" :active="request()->routeIs('municipalities.edit')">
                             マイページ
                         </x-nav-link>
-                        <x-nav-link :href="route('municipalities.offers.received')" :active="request()->routeIs('municipalities.offers.*')">
+                        <x-nav-link :href="route('municipalities.offers.received')" :active="request()->routeIs('municipalities.offers.*') || request()->routeIs('companies.offers.sent')">
                             オファー管理
                         </x-nav-link>
                     @endif
 
                     @if(Auth::user()->role === 'company')
-                        <x-nav-link :href="route('companies.services.index')" :active="request()->routeIs('companies.services.*')">
+                        <x-nav-link :href="route('companies.services.index')" :active="request()->routeIs('companies.services.*') && !request()->routeIs('services.public.index') && !request()->routeIs('services.show')">
                             サービス管理
                         </x-nav-link>
                         <x-nav-link :href="route('companies.profile.edit')" :active="request()->routeIs('companies.profile.edit')">
                             マイページ
+                        </x-nav-link>
+                        <x-nav-link :href="route('companies.offers.received')" :active="request()->routeIs('companies.offers.received')">
+                            オファー受信
                         </x-nav-link>
                     @endif
                 </div>
@@ -92,24 +100,32 @@
                 ダッシュボード
             </x-responsive-nav-link>
 
+            <!-- 企業サービス一覧（全ユーザー共通） -->
+            <x-responsive-nav-link :href="route('services.public.index')" :active="request()->routeIs('services.public.index') || request()->routeIs('services.show')">
+                企業サービス
+            </x-responsive-nav-link>
+
             @if(Auth::user()->role === 'municipality')
-                <x-responsive-nav-link :href="route('municipalities.index')" :active="request()->routeIs('municipalities.*')">
+                <x-responsive-nav-link :href="route('municipalities.index')" :active="request()->routeIs('municipalities.index') || request()->routeIs('municipalities.show')">
                     首長マッチング
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('municipalities.edit')" :active="request()->routeIs('municipalities.edit')">
                     マイページ
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('municipalities.offers.received')" :active="request()->routeIs('municipalities.offers.*')">
+                <x-responsive-nav-link :href="route('municipalities.offers.received')" :active="request()->routeIs('municipalities.offers.*') || request()->routeIs('companies.offers.sent')">
                     オファー管理
                 </x-responsive-nav-link>
             @endif
 
             @if(Auth::user()->role === 'company')
-                <x-responsive-nav-link :href="route('companies.services.index')" :active="request()->routeIs('companies.services.*')">
+                <x-responsive-nav-link :href="route('companies.services.index')" :active="request()->routeIs('companies.services.*') && !request()->routeIs('services.public.index') && !request()->routeIs('services.show')">
                     サービス管理
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('companies.profile.edit')" :active="request()->routeIs('companies.profile.edit')">
                     マイページ
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('companies.offers.received')" :active="request()->routeIs('companies.offers.received')">
+                    オファー受信
                 </x-responsive-nav-link>
             @endif
         </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\MunicipalityProfileController;
 use App\Http\Controllers\MunicipalityOfferController;
 use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\CompanyServiceController;
+use App\Http\Controllers\CompanyOfferController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,10 @@ Route::middleware(['auth', 'approved'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // 企業サービス公開ページ（全ユーザー閲覧可能）
+    Route::get('/services', [CompanyServiceController::class, 'publicIndex'])->name('services.public.index');
+    Route::get('/services/{id}', [CompanyServiceController::class, 'show'])->name('services.show');
 
     // 首長マッチング機能
     Route::prefix('municipalities')->name('municipalities.')->group(function () {
@@ -54,6 +59,11 @@ Route::middleware(['auth', 'approved'])->group(function () {
         Route::get('/services/{id}/edit', [CompanyServiceController::class, 'edit'])->name('services.edit');
         Route::put('/services/{id}', [CompanyServiceController::class, 'update'])->name('services.update');
         Route::delete('/services/{id}', [CompanyServiceController::class, 'destroy'])->name('services.destroy');
+
+        // オファー機能
+        Route::post('/offers', [CompanyOfferController::class, 'store'])->name('offers.store');
+        Route::get('/offers/sent', [CompanyOfferController::class, 'sent'])->name('offers.sent');
+        Route::get('/offers/received', [CompanyOfferController::class, 'received'])->name('offers.received');
     });
 });
 

@@ -13,10 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 管理者ユーザーを作成
+        // 管理者ユーザー、首長、企業データを作成
         $this->call([
             AdminUserSeeder::class,
             MunicipalitySeeder::class,
+            CompanySeeder::class,
         ]);
     }
 }

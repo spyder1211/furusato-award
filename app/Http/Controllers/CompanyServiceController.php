@@ -9,6 +9,57 @@ use Illuminate\Support\Facades\Auth;
 class CompanyServiceController extends Controller
 {
     /**
+     * 公開サービス一覧（全ユーザー閲覧可能）
+     */
+    public function publicIndex(Request $request)
+    {
+        $query = CompanyService::with('user.companyProfile')
+            ->where('status', 'published');
+
+        // カテゴリフィルター
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $services = $query->latest()->paginate(20)->withQueryString();
+
+        // カテゴリ一覧
+        $categories = [
+            '観光振興',
+            '子育て支援',
+            'DX推進',
+            'インフラ整備',
+            '地域活性化',
+            '環境・エネルギー',
+            'その他',
+        ];
+
+        return view('services.index', compact('services', 'categories'));
+    }
+
+    /**
+     * サービス詳細表示（全ユーザー閲覧可能）
+     */
+    public function show($id)
+    {
+        $service = CompanyService::with('user.companyProfile')
+            ->where('status', 'published')
+            ->findOrFail($id);
+
+        $user = Auth::user();
+
+        // 自治体アカウントの場合、既にオファー済みかチェック
+        $alreadyOffered = false;
+        if ($user && $user->role === 'municipality') {
+            $alreadyOffered = \App\Models\CompanyOffer::where('service_id', $service->id)
+                ->where('municipality_user_id', $user->id)
+                ->exists();
+        }
+
+        return view('services.show', compact('service', 'alreadyOffered'));
+    }
+
+    /**
      * 自分の投稿サービス一覧
      */
     public function index()
