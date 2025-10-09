@@ -716,9 +716,9 @@
                 <div>
                     <h4 class="text-white font-semibold mb-4">法的情報</h4>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">利用規約</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">プライバシーポリシー</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">お問い合わせ</a></li>
+                        <li><a href="{{ route('terms') }}" class="text-gray-400 hover:text-white transition-colors duration-200">利用規約</a></li>
+                        <li><a href="{{ route('privacy') }}" class="text-gray-400 hover:text-white transition-colors duration-200">プライバシーポリシー</a></li>
+                        <li><a href="mailto:info@ihearts.co.jp" class="text-gray-400 hover:text-white transition-colors duration-200">お問い合わせ</a></li>
                     </ul>
                 </div>
             </div>

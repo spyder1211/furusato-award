@@ -6,11 +6,16 @@ use App\Http\Controllers\MunicipalityOfferController;
 use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\CompanyServiceController;
 use App\Http\Controllers\CompanyOfferController;
+use App\Http\Controllers\StaticPageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// 利用規約・プライバシーポリシー（公開ページ）
+Route::get('/terms', [StaticPageController::class, 'terms'])->name('terms');
+Route::get('/privacy', [StaticPageController::class, 'privacy'])->name('privacy');
 
 // 承認待ちページ
 Route::get('/pending-approval', function () {
