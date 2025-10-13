@@ -104,6 +104,14 @@ class MunicipalityOfferResource extends Resource
                     ->label('オファー日時')
                     ->dateTime('Y-m-d H:i')
                     ->sortable(),
+                Tables\Columns\IconColumn::make('deleted_at')
+                    ->label('削除済み')
+                    ->boolean()
+                    ->sortable()
+                    ->trueIcon('heroicon-o-trash')
+                    ->falseIcon('heroicon-o-check-circle')
+                    ->trueColor('danger')
+                    ->falseColor('success'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
@@ -113,6 +121,8 @@ class MunicipalityOfferResource extends Resource
                         'contacted' => '対応中',
                         'completed' => '完了',
                     ]),
+                Tables\Filters\TrashedFilter::make()
+                    ->label('削除済み'),
             ])
             ->actions([
                 Tables\Actions\Action::make('contacted')
@@ -131,10 +141,14 @@ class MunicipalityOfferResource extends Resource
                     ->requiresConfirmation(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');
@@ -154,5 +168,13 @@ class MunicipalityOfferResource extends Resource
             'create' => Pages\CreateMunicipalityOffer::route('/create'),
             'edit' => Pages\EditMunicipalityOffer::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }
