@@ -107,6 +107,14 @@ class CompanyOfferResource extends Resource
                     ->label('オファー日時')
                     ->dateTime('Y-m-d H:i')
                     ->sortable(),
+                Tables\Columns\IconColumn::make('deleted_at')
+                    ->label('削除済み')
+                    ->boolean()
+                    ->sortable()
+                    ->trueIcon('heroicon-o-trash')
+                    ->falseIcon('heroicon-o-check-circle')
+                    ->trueColor('danger')
+                    ->falseColor('success'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
@@ -128,6 +136,8 @@ class CompanyOfferResource extends Resource
                         '環境・エネルギー' => '環境・エネルギー',
                         'その他' => 'その他',
                     ]),
+                Tables\Filters\TrashedFilter::make()
+                    ->label('削除済み'),
             ])
             ->actions([
                 Tables\Actions\Action::make('contacted')
@@ -146,10 +156,14 @@ class CompanyOfferResource extends Resource
                     ->requiresConfirmation(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');
@@ -169,5 +183,13 @@ class CompanyOfferResource extends Resource
             'create' => Pages\CreateCompanyOffer::route('/create'),
             'edit' => Pages\EditCompanyOffer::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

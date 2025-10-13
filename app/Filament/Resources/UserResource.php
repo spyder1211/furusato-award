@@ -105,6 +105,14 @@ class UserResource extends Resource
                     ->label('登録日時')
                     ->dateTime('Y-m-d H:i')
                     ->sortable(),
+                Tables\Columns\IconColumn::make('deleted_at')
+                    ->label('削除済み')
+                    ->boolean()
+                    ->sortable()
+                    ->trueIcon('heroicon-o-trash')
+                    ->falseIcon('heroicon-o-check-circle')
+                    ->trueColor('danger')
+                    ->falseColor('success'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
@@ -119,6 +127,8 @@ class UserResource extends Resource
                     ->placeholder('すべて')
                     ->trueLabel('承認済み')
                     ->falseLabel('未承認'),
+                Tables\Filters\TrashedFilter::make()
+                    ->label('削除済み'),
             ])
             ->actions([
                 Tables\Actions\Action::make('approve')
@@ -137,10 +147,14 @@ class UserResource extends Resource
                     ->requiresConfirmation(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');
@@ -160,5 +174,13 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }
