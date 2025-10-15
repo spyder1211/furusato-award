@@ -148,8 +148,8 @@
 
     <div class="footer">
         <p>このメールは ふるさとコネクト マッチングプラットフォーム より自動送信されています。</p>
-        <p>株式会社アイハーツ<br>
-        Email: noreply@ihearts.co.jp</p>
+        <p>アイハーツ株式会社<br>
+        Email: noreply@i-hearts.co.jp</p>
     </div>
 </body>
 </html>

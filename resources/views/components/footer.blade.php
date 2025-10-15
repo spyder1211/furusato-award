@@ -23,10 +23,10 @@
             <!-- 運営会社 -->
             <div>
                 <h3 class="text-lg font-semibold mb-4">運営会社</h3>
-                <p class="text-gray-400">株式会社アイハーツ</p>
+                <p class="text-gray-400">アイハーツ株式会社</p>
                 <p class="text-gray-400 mt-2">
                     お問い合わせ:<br>
-                    <a href="mailto:info@ihearts.co.jp" class="hover:text-white">info@ihearts.co.jp</a>
+                    <a href="mailto:info@ihearts.co.jp" class="hover:text-white">info@i-hearts.co.jp</a>
                 </p>
             </div>
         </div>

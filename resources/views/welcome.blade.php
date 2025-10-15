@@ -696,8 +696,8 @@
                         地域課題の解決をサポートします。
                     </p>
                     <div class="text-sm text-gray-400">
-                        <p class="font-semibold text-white mb-2">運営: 株式会社アイハーツ</p>
-                        <p>お問い合わせ: <a href="mailto:info@ihearts.co.jp" class="text-primary-400 hover:text-primary-300 transition-colors duration-200">info@ihearts.co.jp</a></p>
+                        <p class="font-semibold text-white mb-2">運営: アイハーツ株式会社</p>
+                        <p>お問い合わせ: <a href="mailto:info@ihearts.co.jp" class="text-primary-400 hover:text-primary-300 transition-colors duration-200">info@i-hearts.co.jp</a></p>
                     </div>
                 </div>
 

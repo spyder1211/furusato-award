@@ -70,7 +70,7 @@
                             <h2 class="text-2xl font-bold text-gray-900 mb-4">第1条（総則）</h2>
                             <div class="pl-4 border-l-4 border-blue-600 bg-gray-50 p-4 rounded">
                                 <p class="text-gray-700 leading-relaxed">
-                                    本利用規約（以下「本規約」といいます）は、株式会社アイハーツ（以下「当社」といいます）が提供する「ふるさとコネクト」（以下「本サービス」といいます）の利用に関する条件を定めるものです。利用者は、本規約に同意した上で本サービスを利用するものとします。
+                                    本利用規約（以下「本規約」といいます）は、アイハーツ株式会社（以下「当社」といいます）が提供する「ふるさとコネクト」（以下「本サービス」といいます）の利用に関する条件を定めるものです。利用者は、本規約に同意した上で本サービスを利用するものとします。
                                 </p>
                             </div>
                         </section>
@@ -250,7 +250,7 @@
                                     本規約に関するお問い合わせは、以下までご連絡ください。
                                 </p>
                                 <div class="bg-white p-4 rounded border border-gray-200">
-                                    <p class="font-semibold text-gray-900">株式会社アイハーツ</p>
+                                    <p class="font-semibold text-gray-900">アイハーツ株式会社</p>
                                     <p class="text-gray-700 mt-2">メール: <a href="mailto:info@ihearts.co.jp" class="text-blue-600 hover:underline">info@ihearts.co.jp</a></p>
                                 </div>
                             </div>
