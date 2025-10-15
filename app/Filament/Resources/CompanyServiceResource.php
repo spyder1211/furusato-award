@@ -43,17 +43,11 @@ class CompanyServiceResource extends Resource
                     ->label('タイトル')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('category')
+                Forms\Components\Select::make('category_id')
                     ->label('カテゴリ')
-                    ->options([
-                        '観光振興' => '観光振興',
-                        '子育て支援' => '子育て支援',
-                        'DX推進' => 'DX推進',
-                        'インフラ整備' => 'インフラ整備',
-                        '地域活性化' => '地域活性化',
-                        '環境・エネルギー' => '環境・エネルギー',
-                        'その他' => 'その他',
-                    ])
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 Forms\Components\Textarea::make('description')
                     ->label('サービス・技術の詳細')
@@ -92,7 +86,7 @@ class CompanyServiceResource extends Resource
                     ->searchable()
                     ->limit(30)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('category')
+                Tables\Columns\TextColumn::make('category.name')
                     ->label('カテゴリ')
                     ->badge()
                     ->colors([
@@ -131,17 +125,9 @@ class CompanyServiceResource extends Resource
                     ->falseColor('success'),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('category')
+                Tables\Filters\SelectFilter::make('category_id')
                     ->label('カテゴリ')
-                    ->options([
-                        '観光振興' => '観光振興',
-                        '子育て支援' => '子育て支援',
-                        'DX推進' => 'DX推進',
-                        'インフラ整備' => 'インフラ整備',
-                        '地域活性化' => '地域活性化',
-                        '環境・エネルギー' => '環境・エネルギー',
-                        'その他' => 'その他',
-                    ]),
+                    ->relationship('category', 'name'),
                 Tables\Filters\SelectFilter::make('status')
                     ->label('公開状態')
                     ->options([

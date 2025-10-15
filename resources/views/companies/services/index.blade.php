@@ -28,15 +28,15 @@
                                         <div class="flex-1">
                                             <div class="flex items-center space-x-3 mb-2">
                                                 <span class="px-3 py-1 text-sm rounded-full
-                                                    @if($service->category === '観光振興') bg-blue-100 text-blue-800
-                                                    @elseif($service->category === '子育て支援') bg-pink-100 text-pink-800
-                                                    @elseif($service->category === 'DX推進') bg-purple-100 text-purple-800
-                                                    @elseif($service->category === 'インフラ整備') bg-gray-100 text-gray-800
-                                                    @elseif($service->category === '地域活性化') bg-green-100 text-green-800
-                                                    @elseif($service->category === '環境・エネルギー') bg-teal-100 text-teal-800
+                                                    @if($service->category->name === '観光振興') bg-blue-100 text-blue-800
+                                                    @elseif($service->category->name === '子育て支援') bg-pink-100 text-pink-800
+                                                    @elseif($service->category->name === 'DX推進') bg-purple-100 text-purple-800
+                                                    @elseif($service->category->name === 'インフラ整備') bg-gray-100 text-gray-800
+                                                    @elseif($service->category->name === '地域活性化') bg-green-100 text-green-800
+                                                    @elseif($service->category->name === '環境・エネルギー') bg-teal-100 text-teal-800
                                                     @else bg-yellow-100 text-yellow-800
                                                     @endif">
-                                                    {{ $service->category }}
+                                                    {{ $service->category->name }}
                                                 </span>
                                                 <span class="px-3 py-1 text-sm rounded-full
                                                     @if($service->status === 'published') bg-green-100 text-green-800

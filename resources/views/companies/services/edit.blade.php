@@ -33,25 +33,23 @@
 
                         <!-- カテゴリ -->
                         <div class="mb-6">
-                            <label for="category" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">
                                 カテゴリ <span class="text-red-500">*</span>
                             </label>
                             <select
-                                id="category"
-                                name="category"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('category') border-red-500 @enderror"
+                                id="category_id"
+                                name="category_id"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('category_id') border-red-500 @enderror"
                                 required
                             >
                                 <option value="">選択してください</option>
-                                <option value="観光振興" {{ old('category', $service->category) === '観光振興' ? 'selected' : '' }}>観光振興</option>
-                                <option value="子育て支援" {{ old('category', $service->category) === '子育て支援' ? 'selected' : '' }}>子育て支援</option>
-                                <option value="DX推進" {{ old('category', $service->category) === 'DX推進' ? 'selected' : '' }}>DX推進</option>
-                                <option value="インフラ整備" {{ old('category', $service->category) === 'インフラ整備' ? 'selected' : '' }}>インフラ整備</option>
-                                <option value="地域活性化" {{ old('category', $service->category) === '地域活性化' ? 'selected' : '' }}>地域活性化</option>
-                                <option value="環境・エネルギー" {{ old('category', $service->category) === '環境・エネルギー' ? 'selected' : '' }}>環境・エネルギー</option>
-                                <option value="その他" {{ old('category', $service->category) === 'その他' ? 'selected' : '' }}>その他</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('category_id', $service->category_id) == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
                             </select>
-                            @error('category')
+                            @error('category_id')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
