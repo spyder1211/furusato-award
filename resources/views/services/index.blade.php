@@ -15,12 +15,12 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             <!-- カテゴリフィルター -->
                             <div>
-                                <label for="category" class="block text-sm font-medium text-gray-700">カテゴリ</label>
-                                <select name="category" id="category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <label for="category_id" class="block text-sm font-medium text-gray-700">カテゴリ</label>
+                                <select name="category_id" id="category_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                     <option value="">すべて</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>
-                                            {{ $category }}
+                                        <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -48,15 +48,15 @@
                                 <!-- カテゴリバッジ -->
                                 <div class="mb-3">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
-                                        @if($service->category === '観光振興') bg-blue-100 text-blue-800
-                                        @elseif($service->category === '子育て支援') bg-pink-100 text-pink-800
-                                        @elseif($service->category === 'DX推進') bg-purple-100 text-purple-800
-                                        @elseif($service->category === 'インフラ整備') bg-yellow-100 text-yellow-800
-                                        @elseif($service->category === '地域活性化') bg-green-100 text-green-800
-                                        @elseif($service->category === '環境・エネルギー') bg-teal-100 text-teal-800
+                                        @if($service->category->name === '観光振興') bg-blue-100 text-blue-800
+                                        @elseif($service->category->name === '子育て支援') bg-pink-100 text-pink-800
+                                        @elseif($service->category->name === 'DX推進') bg-purple-100 text-purple-800
+                                        @elseif($service->category->name === 'インフラ整備') bg-yellow-100 text-yellow-800
+                                        @elseif($service->category->name === '地域活性化') bg-green-100 text-green-800
+                                        @elseif($service->category->name === '環境・エネルギー') bg-teal-100 text-teal-800
                                         @else bg-gray-100 text-gray-800
                                         @endif">
-                                        {{ $service->category }}
+                                        {{ $service->category->name }}
                                     </span>
                                 </div>
 

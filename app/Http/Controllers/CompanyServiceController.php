@@ -13,26 +13,18 @@ class CompanyServiceController extends Controller
      */
     public function publicIndex(Request $request)
     {
-        $query = CompanyService::with('user.companyProfile')
+        $query = CompanyService::with(['user.companyProfile', 'category'])
             ->where('status', 'published');
 
         // カテゴリフィルター
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
         }
 
         $services = $query->latest()->paginate(20)->withQueryString();
 
-        // カテゴリ一覧
-        $categories = [
-            '観光振興',
-            '子育て支援',
-            'DX推進',
-            'インフラ整備',
-            '地域活性化',
-            '環境・エネルギー',
-            'その他',
-        ];
+        // カテゴリ一覧（有効なもののみ）
+        $categories = \App\Models\Category::active()->ordered()->get();
 
         return view('services.index', compact('services', 'categories'));
     }
@@ -42,7 +34,7 @@ class CompanyServiceController extends Controller
      */
     public function show($id)
     {
-        $service = CompanyService::with('user.companyProfile')
+        $service = CompanyService::with(['user.companyProfile', 'category'])
             ->where('status', 'published')
             ->findOrFail($id);
 
@@ -72,6 +64,7 @@ class CompanyServiceController extends Controller
         }
 
         $services = $user->companyServices()
+            ->with('category')
             ->latest()
             ->paginate(20);
 
@@ -90,7 +83,10 @@ class CompanyServiceController extends Controller
             abort(403, '企業アカウントのみアクセス可能です');
         }
 
-        return view('companies.services.create');
+        // カテゴリ一覧（有効なもののみ）
+        $categories = \App\Models\Category::active()->ordered()->get();
+
+        return view('companies.services.create', compact('categories'));
     }
 
     /**
@@ -107,14 +103,15 @@ class CompanyServiceController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'category' => 'required|in:観光振興,子育て支援,DX推進,インフラ整備,地域活性化,環境・エネルギー,その他',
+            'category_id' => 'required|exists:categories,id',
             'description' => 'required|string|max:3000',
             'case_studies' => 'nullable|string|max:2000',
             'strengths' => 'nullable|string|max:2000',
             'status' => 'required|in:draft,published',
         ], [
             'title.required' => 'タイトルを入力してください',
-            'category.required' => 'カテゴリを選択してください',
+            'category_id.required' => 'カテゴリを選択してください',
+            'category_id.exists' => '選択されたカテゴリは存在しません',
             'description.required' => 'サービス・技術の詳細を入力してください',
             'status.required' => '公開ステータスを選択してください',
         ]);
@@ -137,14 +134,17 @@ class CompanyServiceController extends Controller
             abort(403, '企業アカウントのみアクセス可能です');
         }
 
-        $service = CompanyService::findOrFail($id);
+        $service = CompanyService::with('category')->findOrFail($id);
 
         // 自分の投稿のみ編集可能
         if ($service->user_id !== $user->id) {
             abort(403, '他のユーザーの投稿は編集できません');
         }
 
-        return view('companies.services.edit', compact('service'));
+        // カテゴリ一覧（有効なもののみ）
+        $categories = \App\Models\Category::active()->ordered()->get();
+
+        return view('companies.services.edit', compact('service', 'categories'));
     }
 
     /**
@@ -168,14 +168,15 @@ class CompanyServiceController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'category' => 'required|in:観光振興,子育て支援,DX推進,インフラ整備,地域活性化,環境・エネルギー,その他',
+            'category_id' => 'required|exists:categories,id',
             'description' => 'required|string|max:3000',
             'case_studies' => 'nullable|string|max:2000',
             'strengths' => 'nullable|string|max:2000',
             'status' => 'required|in:draft,published',
         ], [
             'title.required' => 'タイトルを入力してください',
-            'category.required' => 'カテゴリを選択してください',
+            'category_id.required' => 'カテゴリを選択してください',
+            'category_id.exists' => '選択されたカテゴリは存在しません',
             'description.required' => 'サービス・技術の詳細を入力してください',
             'status.required' => '公開ステータスを選択してください',
         ]);

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\CompanyProfile;
 use App\Models\CompanyService;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -626,6 +627,9 @@ class CompanySeeder extends Seeder
             ],
         ];
 
+        // カテゴリ名からIDへのマッピングを取得
+        $categoryMapping = Category::all()->pluck('id', 'name')->toArray();
+
         foreach ($companies as $company) {
             // ユーザー作成
             $user = User::create([
@@ -647,10 +651,17 @@ class CompanySeeder extends Seeder
 
             // 企業サービス作成
             foreach ($company['company_services'] as $service) {
+                // カテゴリ名からIDを取得
+                $categoryId = $categoryMapping[$service['category']] ?? null;
+
+                if ($categoryId === null) {
+                    throw new \Exception("カテゴリ '{$service['category']}' が見つかりません。CategorySeederを先に実行してください。");
+                }
+
                 CompanyService::create([
                     'user_id' => $user->id,
                     'title' => $service['title'],
-                    'category' => $service['category'],
+                    'category_id' => $categoryId,
                     'description' => $service['description'],
                     'case_studies' => $service['case_studies'] ?? null,
                     'strengths' => $service['strengths'] ?? null,

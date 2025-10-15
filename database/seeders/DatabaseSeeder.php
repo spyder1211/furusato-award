@@ -13,6 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // カテゴリデータを先に作成（CompanySeederで必要）
+        $this->call([
+            CategorySeeder::class,
+        ]);
+
         // 管理者ユーザー、首長、企業データを作成
         $this->call([
             AdminUserSeeder::class,

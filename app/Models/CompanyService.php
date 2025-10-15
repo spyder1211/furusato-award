@@ -16,7 +16,7 @@ class CompanyService extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'category',
+        'category_id',
         'description',
         'case_studies',
         'strengths',
@@ -29,6 +29,14 @@ class CompanyService extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the category that owns the company service.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**
