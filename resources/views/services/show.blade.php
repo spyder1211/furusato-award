@@ -35,6 +35,13 @@
                     <!-- タイトル -->
                     <h3 class="text-2xl font-bold text-gray-900 mb-4">{{ $service->title }}</h3>
 
+                    <!-- サービス画像 -->
+                    @if($service->image_path)
+                        <div class="mb-6">
+                            <img src="{{ asset('storage/' . $service->image_path) }}" alt="{{ $service->title }}" class="w-full max-w-2xl rounded-lg shadow-md">
+                        </div>
+                    @endif
+
                     <!-- 企業情報 -->
                     <div class="mb-6 pb-6 border-b border-gray-200">
                         <h4 class="text-lg font-semibold text-gray-800 mb-3">提供企業</h4>
@@ -55,14 +62,18 @@
                     <!-- サービス・技術の詳細 -->
                     <div class="mb-6">
                         <h4 class="text-lg font-semibold text-gray-800 mb-3">サービス・技術の詳細</h4>
-                        <p class="text-gray-700 whitespace-pre-wrap">{{ $service->description }}</p>
+                        <div class="prose prose-sm max-w-none text-gray-700">
+                            {!! $service->description !!}
+                        </div>
                     </div>
 
                     <!-- 導入実績・事例 -->
                     @if($service->case_studies)
                         <div class="mb-6">
                             <h4 class="text-lg font-semibold text-gray-800 mb-3">導入実績・事例</h4>
-                            <p class="text-gray-700 whitespace-pre-wrap">{{ $service->case_studies }}</p>
+                            <div class="prose prose-sm max-w-none text-gray-700">
+                                {!! $service->case_studies !!}
+                            </div>
                         </div>
                     @endif
 
@@ -70,7 +81,9 @@
                     @if($service->strengths)
                         <div class="mb-6">
                             <h4 class="text-lg font-semibold text-gray-800 mb-3">自社の強み</h4>
-                            <p class="text-gray-700 whitespace-pre-wrap">{{ $service->strengths }}</p>
+                            <div class="prose prose-sm max-w-none text-gray-700">
+                                {!! $service->strengths !!}
+                            </div>
                         </div>
                     @endif
 

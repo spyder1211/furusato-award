@@ -9,7 +9,7 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('companies.services.store') }}">
+                    <form method="POST" action="{{ route('companies.services.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <!-- タイトル -->
@@ -54,19 +54,41 @@
                             @enderror
                         </div>
 
+                        <!-- サービス画像 -->
+                        <div class="mb-6">
+                            <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
+                                サービス画像（任意）
+                            </label>
+                            <input
+                                type="file"
+                                id="image"
+                                name="image"
+                                accept="image/jpeg,image/jpg,image/png,image/webp"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('image') border-red-500 @enderror"
+                                onchange="previewImage(event)"
+                            >
+                            @error('image')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                            <p class="mt-1 text-sm text-gray-500">JPEG、PNG、WEBP形式、最大2MB</p>
+
+                            <!-- 画像プレビュー -->
+                            <div id="image-preview" class="mt-4 hidden">
+                                <img id="preview" class="max-w-md rounded-lg border border-gray-300" alt="プレビュー">
+                            </div>
+                        </div>
+
                         <!-- サービス・技術の詳細 -->
                         <div class="mb-6">
-                            <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
                                 サービス・技術の詳細 <span class="text-red-500">*</span>
                             </label>
-                            <textarea
-                                id="description"
+                            <x-tiptap-editor
                                 name="description"
-                                rows="8"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('description') border-red-500 @enderror"
+                                :value="old('description')"
+                                :required="true"
                                 placeholder="サービスや技術の内容を詳しく説明してください"
-                                required
-                            >{{ old('description') }}</textarea>
+                            />
                             @error('description')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -75,16 +97,14 @@
 
                         <!-- 導入実績・事例 -->
                         <div class="mb-6">
-                            <label for="case_studies" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
                                 導入実績・事例（任意）
                             </label>
-                            <textarea
-                                id="case_studies"
+                            <x-tiptap-editor
                                 name="case_studies"
-                                rows="6"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('case_studies') border-red-500 @enderror"
+                                :value="old('case_studies')"
                                 placeholder="これまでの導入実績や事例があれば記載してください"
-                            >{{ old('case_studies') }}</textarea>
+                            />
                             @error('case_studies')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -93,16 +113,14 @@
 
                         <!-- 自社の強み -->
                         <div class="mb-6">
-                            <label for="strengths" class="block text-sm font-medium text-gray-700 mb-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
                                 自社の強み（任意）
                             </label>
-                            <textarea
-                                id="strengths"
+                            <x-tiptap-editor
                                 name="strengths"
-                                rows="6"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('strengths') border-red-500 @enderror"
+                                :value="old('strengths')"
                                 placeholder="このサービス・技術に関する自社の強みを記載してください"
-                            >{{ old('strengths') }}</textarea>
+                            />
                             @error('strengths')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -146,4 +164,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('preview');
+            const previewContainer = document.getElementById('image-preview');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.classList.add('hidden');
+            }
+        }
+    </script>
 </x-app-layout>
