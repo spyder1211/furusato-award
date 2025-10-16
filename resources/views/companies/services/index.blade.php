@@ -60,6 +60,10 @@
                                         </div>
 
                                         <div class="ml-4 flex flex-col space-y-2">
+                                            <a href="{{ route('services.show', $service->id) }}"
+                                               class="text-green-600 hover:text-green-900 text-sm">
+                                                詳細
+                                            </a>
                                             <a href="{{ route('companies.services.edit', $service->id) }}"
                                                class="text-blue-600 hover:text-blue-900 text-sm">
                                                 編集

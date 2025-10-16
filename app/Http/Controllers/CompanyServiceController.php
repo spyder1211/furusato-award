@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CompanyService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyServiceController extends Controller
 {
@@ -104,6 +105,7 @@ class CompanyServiceController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
             'description' => 'required|string|max:3000',
             'case_studies' => 'nullable|string|max:2000',
             'strengths' => 'nullable|string|max:2000',
@@ -112,9 +114,18 @@ class CompanyServiceController extends Controller
             'title.required' => 'タイトルを入力してください',
             'category_id.required' => 'カテゴリを選択してください',
             'category_id.exists' => '選択されたカテゴリは存在しません',
+            'image.image' => '画像ファイルを選択してください',
+            'image.mimes' => '画像はjpeg、jpg、png、webp形式のみアップロード可能です',
+            'image.max' => '画像サイズは2MB以下にしてください',
             'description.required' => 'サービス・技術の詳細を入力してください',
             'status.required' => '公開ステータスを選択してください',
         ]);
+
+        // 画像アップロード処理
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('services', 'public');
+            $validated['image_path'] = $imagePath;
+        }
 
         $service = $user->companyServices()->create($validated);
 
@@ -169,6 +180,8 @@ class CompanyServiceController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
+            'remove_image' => 'nullable|boolean',
             'description' => 'required|string|max:3000',
             'case_studies' => 'nullable|string|max:2000',
             'strengths' => 'nullable|string|max:2000',
@@ -177,9 +190,28 @@ class CompanyServiceController extends Controller
             'title.required' => 'タイトルを入力してください',
             'category_id.required' => 'カテゴリを選択してください',
             'category_id.exists' => '選択されたカテゴリは存在しません',
+            'image.image' => '画像ファイルを選択してください',
+            'image.mimes' => '画像はjpeg、jpg、png、webp形式のみアップロード可能です',
+            'image.max' => '画像サイズは2MB以下にしてください',
             'description.required' => 'サービス・技術の詳細を入力してください',
             'status.required' => '公開ステータスを選択してください',
         ]);
+
+        // 画像削除処理
+        if ($request->input('remove_image') && $service->image_path) {
+            Storage::disk('public')->delete($service->image_path);
+            $validated['image_path'] = null;
+        }
+
+        // 画像アップロード処理
+        if ($request->hasFile('image')) {
+            // 既存の画像を削除
+            if ($service->image_path) {
+                Storage::disk('public')->delete($service->image_path);
+            }
+            $imagePath = $request->file('image')->store('services', 'public');
+            $validated['image_path'] = $imagePath;
+        }
 
         $service->update($validated);
 
@@ -204,6 +236,11 @@ class CompanyServiceController extends Controller
         // 自分の投稿のみ削除可能
         if ($service->user_id !== $user->id) {
             abort(403, '他のユーザーの投稿は削除できません');
+        }
+
+        // 画像ファイルを削除
+        if ($service->image_path) {
+            Storage::disk('public')->delete($service->image_path);
         }
 
         $service->delete();

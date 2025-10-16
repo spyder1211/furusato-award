@@ -17,6 +17,7 @@ class CompanyService extends Model
         'user_id',
         'title',
         'category_id',
+        'image_path',
         'description',
         'case_studies',
         'strengths',

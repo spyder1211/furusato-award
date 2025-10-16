@@ -7,6 +7,7 @@ use App\Http\Controllers\CompanyProfileController;
 use App\Http\Controllers\CompanyServiceController;
 use App\Http\Controllers\CompanyOfferController;
 use App\Http\Controllers\StaticPageController;
+use App\Http\Controllers\ImageUploadController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +31,9 @@ Route::middleware(['auth', 'approved'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Tiptapエディター用画像アップロード
+    Route::post('/api/upload-image', [ImageUploadController::class, 'uploadEditorImage'])->name('api.upload.image');
 
     // 企業サービス公開ページ（全ユーザー閲覧可能）
     Route::get('/services', [CompanyServiceController::class, 'publicIndex'])->name('services.public.index');
