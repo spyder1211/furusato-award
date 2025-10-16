@@ -8,9 +8,24 @@ use App\Models\CompanyService;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CompanySeeder extends Seeder
 {
+    /**
+     * カテゴリごとの画像キーワード
+     */
+    private $categoryImageKeywords = [
+        '観光振興' => 'tourism',
+        '子育て支援' => 'family',
+        'DX推進' => 'technology',
+        'インフラ整備' => 'infrastructure',
+        '地域活性化' => 'community',
+        '環境・エネルギー' => 'solar-energy',
+        'その他' => 'business',
+    ];
+
     /**
      * Run the database seeds.
      */
@@ -650,6 +665,7 @@ class CompanySeeder extends Seeder
             ]);
 
             // 企業サービス作成
+            $serviceIndex = 0;
             foreach ($company['company_services'] as $service) {
                 // カテゴリ名からIDを取得
                 $categoryId = $categoryMapping[$service['category']] ?? null;
@@ -658,16 +674,59 @@ class CompanySeeder extends Seeder
                     throw new \Exception("カテゴリ '{$service['category']}' が見つかりません。CategorySeederを先に実行してください。");
                 }
 
+                // カテゴリに応じた画像をダウンロード
+                $imagePath = $this->downloadServiceImage($service['category'], $serviceIndex);
+
                 CompanyService::create([
                     'user_id' => $user->id,
                     'title' => $service['title'],
                     'category_id' => $categoryId,
+                    'image_path' => $imagePath,
                     'description' => $service['description'],
                     'case_studies' => $service['case_studies'] ?? null,
                     'strengths' => $service['strengths'] ?? null,
                     'status' => $service['status'],
                 ]);
+
+                $serviceIndex++;
             }
+        }
+    }
+
+    /**
+     * カテゴリに応じた画像をダウンロード
+     */
+    private function downloadServiceImage(string $categoryName, int $serviceIndex): ?string
+    {
+        try {
+            $keyword = $this->categoryImageKeywords[$categoryName] ?? 'business';
+
+            // Lorem Picsumから画像を取得（安定したサービス）
+            // 幅800px、高さ600px、シード値でサービスごとに異なる画像を取得
+            $seed = $serviceIndex;
+            $imageUrl = "https://picsum.photos/seed/{$keyword}-{$seed}/800/600";
+
+            // 画像をダウンロード
+            $imageContent = @file_get_contents($imageUrl);
+
+            if ($imageContent === false) {
+                $this->command->warn("画像のダウンロードに失敗しました: {$imageUrl}");
+                return null;
+            }
+
+            // ファイル名を生成
+            $filename = Str::random(40) . '.jpg';
+            $path = 'services/' . $filename;
+
+            // ストレージに保存
+            Storage::disk('public')->put($path, $imageContent);
+
+            $this->command->info("画像をダウンロードしました: {$path}");
+
+            return $path;
+        } catch (\Exception $e) {
+            $this->command->error("画像ダウンロード中にエラーが発生しました: " . $e->getMessage());
+            return null;
         }
     }
 }
